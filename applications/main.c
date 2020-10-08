@@ -15,8 +15,11 @@
 /* defined the LED_G pin: PF14 */
 #define LED0_PIN    GET_PIN(F, 14)
 
+extern rt_err_t dbus_dma_init(void);
+
 int main(void)
 {
+		dbus_dma_init();
     int count = 1;
     /* set LED0 pin mode to output */
     rt_pin_mode(LED0_PIN, PIN_MODE_OUTPUT);
