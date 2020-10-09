@@ -1,32 +1,19 @@
 #include <rtthread.h>
 #include <rtdevice.h>
-#include "variables.h"
+#include "rcVariables.h"
 
 
 #define DBUS "uart1"
 
-struct rx_msg
-{
-	rt_device_t dev;
-	rt_size_t size;
-};
-
-rt_err_t dbus_control(void);
-	
-extern rt_device_t dbus;
-extern struct rt_messagequeue rx_mq;
-
-extern rc_info_t rc; 
-
 //接收数据回调函数
 static rt_err_t dbus_input(rt_device_t dev,rt_size_t size)
 {
-	struct rx_msg msg;
+	struct rx_msg dbus_msg;
 	rt_err_t result;
-	msg.dev=dev;
-	msg.size=size;
+	dbus_msg.dev=dev;
+	dbus_msg.size=size;
 	
-	result = rt_mq_send(&rx_mq,&msg,sizeof(msg));
+	result = rt_mq_send(&rx_mq,&dbus_msg,sizeof(dbus_msg));
 	if( result == -RT_EFULL)
 	{
 		//消息队列满
@@ -37,19 +24,19 @@ static rt_err_t dbus_input(rt_device_t dev,rt_size_t size)
 
 static void dbus_thread_entry(void *parameter)
 {
-    struct rx_msg msg;
+    struct rx_msg dbus_msg;
     rt_err_t result;
     rt_uint32_t rx_length;
     static uint8_t rx_buffer[RT_SERIAL_RB_BUFSZ + 1];
 
     while (1)
     {
-        rt_memset(&msg, 0, sizeof(msg));
+        rt_memset(&dbus_msg, 0, sizeof(dbus_msg));
         /* 从消息队列中读取消息*/
-        result = rt_mq_recv(&rx_mq, &msg, sizeof(msg), RT_WAITING_FOREVER);
+        result = rt_mq_recv(&rx_mq, &dbus_msg, sizeof(dbus_msg), RT_WAITING_FOREVER);
         if (result == RT_EOK)
         {
-					rx_length = rt_device_read(msg.dev, 0, rx_buffer, msg.size);
+					rx_length = rt_device_read(dbus_msg.dev, 0, rx_buffer, dbus_msg.size);
 					rx_buffer[rx_length] = '\0';
 					RC_Process(&rc,rx_buffer);
         }
@@ -73,7 +60,7 @@ rt_err_t dbus_dma_init(void)
                sizeof(struct rx_msg),    /* 一条消息的最大长度 */
                sizeof(msg_pool),         /* 存放消息的缓冲区大小 */
                RT_IPC_FLAG_FIFO);        /* 如果有多个线程等待，按照先来先得到的方法分配消息 */
-	dbus_control();
+	dbus_control();//配置串口参数
 	/* 以 DMA 接收及轮询发送方式打开串口设备 */
 	rt_device_open(dbus, RT_DEVICE_FLAG_DMA_RX);
   /* 设置接收回调函数 */

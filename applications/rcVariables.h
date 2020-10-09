@@ -1,10 +1,5 @@
 #include <rtthread.h>
 
-
-//串口部分
-static rt_device_t dbus; //串口设备句柄
-static struct rt_messagequeue rx_mq; //消息队列控制块
-
 typedef __packed struct
 {
 	/* mouse move information */
@@ -35,7 +30,17 @@ typedef struct
 	uint16_t key;
 } rc_info_t; //遥控器通道结构体
 
+
+struct rx_msg
+{
+	rt_device_t dev;
+	rt_size_t size;
+};
+
 void RC_Process(rc_info_t *rc,uint8_t *rx_buffer);
+rt_err_t dbus_control(void);
+
 rc_info_t rc; //遥控器通道结构体变量
 
-
+static rt_device_t dbus; //串口设备句柄
+static struct rt_messagequeue rx_mq; //消息队列控制块
