@@ -13,7 +13,7 @@ static rt_err_t dbus_input(rt_device_t dev,rt_size_t size)
 	dbus_msg.dev=dev;
 	dbus_msg.size=size;
 	
-	result = rt_mq_send(&rx_mq,&dbus_msg,sizeof(dbus_msg));
+	result = rt_mq_send(&dbus_rx_mq,&dbus_msg,sizeof(dbus_msg));
 	if( result == -RT_EFULL)
 	{
 		//消息队列满
@@ -26,18 +26,15 @@ static void dbus_thread_entry(void *parameter)
 {
     struct rx_msg dbus_msg;
     rt_err_t result;
-    rt_uint32_t rx_length;
-    static uint8_t rx_buffer[RT_SERIAL_RB_BUFSZ + 1];
 
     while (1)
     {
         rt_memset(&dbus_msg, 0, sizeof(dbus_msg));
         /* 从消息队列中读取消息*/
-        result = rt_mq_recv(&rx_mq, &dbus_msg, sizeof(dbus_msg), RT_WAITING_FOREVER);
+        result = rt_mq_recv(&dbus_rx_mq, &dbus_msg, sizeof(dbus_msg), RT_WAITING_FOREVER);
         if (result == RT_EOK)
         {
-					rx_length = rt_device_read(dbus_msg.dev, 0, rx_buffer, dbus_msg.size);
-					rx_buffer[rx_length] = '\0';
+					rt_device_read(dbus_msg.dev, 0, rx_buffer, dbus_msg.size);
 					RC_Process(&rc,rx_buffer);
         }
     }
@@ -55,7 +52,7 @@ rt_err_t dbus_dma_init(void)
 		return RT_ERROR;
 	}
 	//初始化消息队列
-	rt_mq_init(&rx_mq, "rx_mq",
+	rt_mq_init(&dbus_rx_mq, "dbus_rx_mq",
                msg_pool,                 /* 存放消息的缓冲区 */
                sizeof(struct rx_msg),    /* 一条消息的最大长度 */
                sizeof(msg_pool),         /* 存放消息的缓冲区大小 */
@@ -66,7 +63,7 @@ rt_err_t dbus_dma_init(void)
   /* 设置接收回调函数 */
   rt_device_set_rx_indicate(dbus, dbus_input);
 	//创建dbus接受函数
-	rt_thread_t dbus_receive_thread = rt_thread_create("dbus_receive",dbus_thread_entry,RT_NULL,512,10,1);
+	rt_thread_t dbus_receive_thread = rt_thread_create("dbus_receive",dbus_thread_entry,RT_NULL,256,10,1);
 	//创建成功则启动线程
 	if(dbus_receive_thread != RT_NULL)
 	{
@@ -89,7 +86,7 @@ rt_err_t dbus_control(void)
 	dbus_config.parity = PARITY_NONE;
 	dbus_config.bit_order = BIT_ORDER_LSB;
 	dbus_config.invert = NRZ_NORMAL;
-	dbus_config.bufsz = 18;
+	dbus_config.bufsz = 19; //设置为18无法运行，暂时不知道为什么
 	dbus_config.reserved = 0;
 	
 	rt_device_control(dbus,RT_DEVICE_CTRL_CONFIG,&dbus_config);

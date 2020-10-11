@@ -40,7 +40,8 @@ struct rx_msg
 void RC_Process(rc_info_t *rc,uint8_t *rx_buffer);
 rt_err_t dbus_control(void);
 
+uint8_t rx_buffer[18];//串口接收缓冲区
 rc_info_t rc; //遥控器通道结构体变量
 
 static rt_device_t dbus; //串口设备句柄
-static struct rt_messagequeue rx_mq; //消息队列控制块
+static struct rt_messagequeue dbus_rx_mq; //消息队列控制块
