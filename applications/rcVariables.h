@@ -1,6 +1,6 @@
 #include <rtthread.h>
 
-typedef __packed struct
+typedef struct
 {
 	/* mouse move information */
 	int16_t x;
