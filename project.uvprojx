@@ -467,6 +467,11 @@
               <FileType>1</FileType>
               <FilePath>.\applications\rcThread.c</FilePath>
             </File>
+            <File>
+              <FileName>devInit.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\applications\devInit.c</FilePath>
+            </File>
           </Files>
         </Group>
         <Group>
