@@ -48,8 +48,6 @@ void RC_Process(rc_info_t *rc,uint8_t *dbus_rx_buffer);
 rt_err_t dbus_control(void);
 
 
-rc_info_t rc; //遥控器通道结构体变量
-
 extern rt_device_t dbus; //串口设备句柄
 static struct rt_messagequeue dbus_rx_mq; //消息队列控制块
 static uint8_t dbus_rx_buffer[18];//串口接收缓冲区

@@ -483,6 +483,11 @@
               <FileType>1</FileType>
               <FilePath>.\applications\can_dev.c</FilePath>
             </File>
+            <File>
+              <FileName>output.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\applications\output.c</FilePath>
+            </File>
           </Files>
         </Group>
         <Group>

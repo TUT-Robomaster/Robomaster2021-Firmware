@@ -21,17 +21,15 @@ extern rt_err_t power_24v_on(void);
 extern rt_err_t dbus_open(void);
 extern rt_err_t dbus_init(void);
 extern rt_err_t can_sample(void);
-int16_t v=30000;
+//extern rt_err_t output(void);
 int main(void)
 {
-
-	
 		power_24v_on();
-	
 		dbus_init();
 		dbus_open();
-		//can1_init();
+	rt_thread_mdelay(500);
 		can_sample();
+		//output();
     int count = 1;
     /* set LED0 pin mode to output */
     rt_pin_mode(LED0_PIN, PIN_MODE_OUTPUT);
@@ -39,12 +37,8 @@ int main(void)
     {
         rt_pin_write(LED0_PIN, PIN_HIGH);
         rt_thread_mdelay(500);
-			v=1000;
-			msgprocess();
         rt_pin_write(LED0_PIN, PIN_LOW);
         rt_thread_mdelay(500);
-			v=3000;
-			msgprocess();
     }
 
     return RT_EOK;

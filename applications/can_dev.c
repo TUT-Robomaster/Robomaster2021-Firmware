@@ -1,5 +1,6 @@
 #include <rtthread.h>
 #include "rtdevice.h"
+#include "rcVariables.h"
 
 #define CAN_DEV_NAME       "can1"      /* CAN 设备名称 */
 void msgprocess(void);
@@ -7,6 +8,8 @@ static struct rt_semaphore rx_sem;     /* 用于接收消息的信号量 */
 rt_device_t can_dev;            /* CAN 设备句柄 */
 extern int16_t v;
 struct rt_can_msg msg = {0};
+struct rt_can_msg rxmsg = {0};
+extern rc_info_t rc;
 /* 接收数据回调函数 */
 static rt_err_t can_rx_call(rt_device_t dev, rt_size_t size)
 {
@@ -20,7 +23,6 @@ static void can_rx_thread(void *parameter)
 {
     int i;
     rt_err_t res;
-    struct rt_can_msg rxmsg = {0};
 
     /* 设置接收回调函数 */
     rt_device_set_rx_indicate(can_dev, can_rx_call);
@@ -44,15 +46,17 @@ static void can_rx_thread(void *parameter)
         rt_sem_take(&rx_sem, RT_WAITING_FOREVER);
         /* 从 CAN 读取一帧数据 */
         rt_device_read(can_dev, 0, &rxmsg, sizeof(rxmsg));
-        /* 打印数据 ID 及内容 */
-        rt_kprintf("ID:%x", rxmsg.id);
-        for (i = 0; i < 8; i++)
-        {
-            rt_kprintf("%2x", rxmsg.data[i]);
-        }
-				
+//        /* 打印数据 ID 及内容 */
+//        rt_kprintf("ID:%x", rxmsg.id);
+//        for (i = 0; i < 8; i++)
+//        {
+//            rt_kprintf("%2x", rxmsg.data[i]);
+//        }
+//				
 
-        rt_kprintf("\n");
+//        rt_kprintf("\n");
+				v = rc.ch4*30;
+				msgprocess();
 				rt_device_write(can_dev, 0, &msg, sizeof(msg));
     }
 
@@ -88,7 +92,7 @@ int can_sample(int argc, char *argv[])
     res = rt_device_open(can_dev, RT_DEVICE_FLAG_INT_TX | RT_DEVICE_FLAG_INT_RX);
     RT_ASSERT(res == RT_EOK);
     /* 创建数据接收线程 */
-    thread = rt_thread_create("can_rx", can_rx_thread, RT_NULL, 1024, 25, 10);
+    thread = rt_thread_create("can_rx", can_rx_thread, RT_NULL, 1024, 25, 1);
     if (thread != RT_NULL)
     {
         rt_thread_startup(thread);
@@ -98,7 +102,7 @@ int can_sample(int argc, char *argv[])
         rt_kprintf("create can_rx thread failed!\n");
     }
 
-    msg.id = 0x1ff;              /* ID 为 0x78 */
+    msg.id = 0x1ff;              /* ID 为 0x1ff */
     msg.ide = RT_CAN_STDID;     /* 标准格式 */
     msg.rtr = RT_CAN_DTR;       /* 数据帧 */
     msg.len = 8;                /* 数据长度为 8 */

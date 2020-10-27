@@ -1,5 +1,6 @@
 #include "rcVariables.h"
 
+rc_info_t rc; //遥控器通道结构体变量
 
 //接收数据回调函数
 static rt_err_t dbus_input(rt_device_t dev,rt_size_t size)
