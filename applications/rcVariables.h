@@ -1,8 +1,5 @@
 #include <rtthread.h>
 #include <rtdevice.h>
-#define THREAD_PRIORITY 10
-#define STACK_SIZE 256
-#define TIMESLICE 1
 
 #define DBUS "uart1"
 
@@ -45,12 +42,11 @@ struct rx_msg
 };
 //函数相关
 void RC_Process(rc_info_t *rc,uint8_t *dbus_rx_buffer);
-rt_err_t dbus_control(void);
 
+extern rt_err_t dbus_init(void);
+rt_err_t dbus_control(void);
 
 extern rt_device_t dbus; //串口设备句柄
 static struct rt_messagequeue dbus_rx_mq; //消息队列控制块
 static uint8_t dbus_rx_buffer[18];//串口接收缓冲区
 
-static rt_uint8_t dbus_thread_stack[STACK_SIZE];//线程栈
-static struct rt_thread dbus_receive_thread;

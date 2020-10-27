@@ -498,6 +498,16 @@
               <FileType>1</FileType>
               <FilePath>.\Algorithm\pid.c</FilePath>
             </File>
+            <File>
+              <FileName>packageProcess.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\Algorithm\packageProcess.c</FilePath>
+            </File>
+            <File>
+              <FileName>motor.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\Algorithm\motor.c</FilePath>
+            </File>
           </Files>
         </Group>
         <Group>

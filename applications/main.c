@@ -14,20 +14,16 @@
 
 /* defined the LED_G pin: PF14 */
 #define LED0_PIN    GET_PIN(F, 14)
-extern void msgprocess(void);
-extern rt_device_t can_dev;
-extern struct rt_can_msg msg;
-extern rt_err_t power_24v_on(void);
+
+extern void power_24v_switch(rt_bool_t,rt_bool_t,rt_bool_t,rt_bool_t);
 extern rt_err_t dbus_open(void);
-extern rt_err_t dbus_init(void);
 extern rt_err_t can_sample(void);
 //extern rt_err_t output(void);
 int main(void)
 {
-		power_24v_on();
-		dbus_init();
+		power_24v_switch(1,1,1,1);
 		dbus_open();
-	rt_thread_mdelay(500);
+		rt_thread_mdelay(50);
 		can_sample();
 		//output();
     int count = 1;
