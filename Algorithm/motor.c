@@ -23,6 +23,7 @@ void set_moto_current(rt_int16_t iq1, rt_int16_t iq2, rt_int16_t iq3, rt_int16_t
 
 void set_motor_voltage(uint8_t id_range, int16_t v1, int16_t v2, int16_t v3, int16_t v4)
 {
+	rt_size_t size;
   struct rt_can_msg voltage_msg={0};
   voltage_msg.id = (id_range == 0)?(0x1ff):(0x2ff);
   voltage_msg.ide   = CAN_ID_STD;
@@ -36,5 +37,7 @@ void set_motor_voltage(uint8_t id_range, int16_t v1, int16_t v2, int16_t v3, int
   voltage_msg.data[5] =    (v3)&0xff;
   voltage_msg.data[6] = (v4>>8)&0xff;
   voltage_msg.data[7] =    (v4)&0xff;
-	rt_device_write(can1_dev,0,&voltage_msg,sizeof(voltage_msg));
+	size = rt_device_write(can1_dev,0,&voltage_msg,sizeof(voltage_msg));
+	if(size ==0 )
+		rt_kprintf("can device write failed!\n");
 }

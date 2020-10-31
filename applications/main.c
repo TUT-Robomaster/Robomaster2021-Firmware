@@ -17,15 +17,19 @@
 
 extern void power_24v_switch(rt_bool_t,rt_bool_t,rt_bool_t,rt_bool_t);
 extern rt_err_t dbus_open(void);
-extern rt_err_t can_sample(void);
-//extern rt_err_t output(void);
+extern rt_err_t can_rx(void);
+extern rt_err_t can_write(void);
+extern void gimbalTask(void);
 int main(void)
 {
-		power_24v_switch(1,1,1,1);
+		power_24v_switch(1,0,1,0);
 		dbus_open();
-		rt_thread_mdelay(50);
-		can_sample();
-		//output();
+	rt_thread_mdelay(20);
+		can_rx();
+	rt_thread_mdelay(200);
+		can_write();
+	rt_thread_mdelay(20);
+	gimbalTask();
     int count = 1;
     /* set LED0 pin mode to output */
     rt_pin_mode(LED0_PIN, PIN_MODE_OUTPUT);

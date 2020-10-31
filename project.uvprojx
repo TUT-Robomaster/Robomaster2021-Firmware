@@ -313,7 +313,7 @@
           </ArmAdsMisc>
           <Cads>
             <interw>1</interw>
-            <Optim>6</Optim>
+            <Optim>7</Optim>
             <oTime>0</oTime>
             <SplitLS>0</SplitLS>
             <OneElfS>1</OneElfS>
@@ -337,7 +337,7 @@
             <v6Rtti>0</v6Rtti>
             <VariousControls>
               <MiscControls></MiscControls>
-              <Define>STM32F427xx, USE_HAL_DRIVER,ARM_MATH_CM4,CC_ARM</Define>
+              <Define>STM32F427xx, USE_HAL_DRIVER,ARM_MATH_CM4,CC_ARM,__FPU_PRESENT=1</Define>
               <Undefine></Undefine>
               <IncludePath>.;rt-thread\include;applications;board;board\CubeMX_Config\Inc;board\ports;libraries\HAL_Drivers;libraries\HAL_Drivers\config;rt-thread\libcpu\arm\common;rt-thread\libcpu\arm\cortex-m4;rt-thread\components\drivers\include;rt-thread\components\drivers\hwcrypto;.;rt-thread\components\drivers\include;rt-thread\components\drivers\include;rt-thread\components\drivers\include;rt-thread\components\drivers\spi;rt-thread\components\drivers\include;rt-thread\components\drivers\include;rt-thread\components\finsh;rt-thread\components\libc\compilers\common;libraries\STM32F4xx_HAL\STM32F4xx_HAL_Driver\Inc;libraries\STM32F4xx_HAL\CMSIS\Device\ST\STM32F4xx\Include;libraries\STM32F4xx_HAL\CMSIS\Include;.\Algorithm</IncludePath>
             </VariousControls>
@@ -381,81 +381,6 @@
       </TargetOption>
       <Groups>
         <Group>
-          <GroupName>Kernel</GroupName>
-          <Files>
-            <File>
-              <FileName>clock.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>rt-thread\src\clock.c</FilePath>
-            </File>
-            <File>
-              <FileName>components.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>rt-thread\src\components.c</FilePath>
-            </File>
-            <File>
-              <FileName>device.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>rt-thread\src\device.c</FilePath>
-            </File>
-            <File>
-              <FileName>idle.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>rt-thread\src\idle.c</FilePath>
-            </File>
-            <File>
-              <FileName>ipc.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>rt-thread\src\ipc.c</FilePath>
-            </File>
-            <File>
-              <FileName>irq.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>rt-thread\src\irq.c</FilePath>
-            </File>
-            <File>
-              <FileName>kservice.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>rt-thread\src\kservice.c</FilePath>
-            </File>
-            <File>
-              <FileName>mem.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>rt-thread\src\mem.c</FilePath>
-            </File>
-            <File>
-              <FileName>mempool.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>rt-thread\src\mempool.c</FilePath>
-            </File>
-            <File>
-              <FileName>object.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>rt-thread\src\object.c</FilePath>
-            </File>
-            <File>
-              <FileName>scheduler.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>rt-thread\src\scheduler.c</FilePath>
-            </File>
-            <File>
-              <FileName>signal.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>rt-thread\src\signal.c</FilePath>
-            </File>
-            <File>
-              <FileName>thread.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>rt-thread\src\thread.c</FilePath>
-            </File>
-            <File>
-              <FileName>timer.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>rt-thread\src\timer.c</FilePath>
-            </File>
-          </Files>
-        </Group>
-        <Group>
           <GroupName>Applications</GroupName>
           <Files>
             <File>
@@ -464,29 +389,29 @@
               <FilePath>applications\main.c</FilePath>
             </File>
             <File>
-              <FileName>rcThread.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>.\applications\rcThread.c</FilePath>
-            </File>
-            <File>
-              <FileName>devInit.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>.\applications\devInit.c</FilePath>
-            </File>
-            <File>
               <FileName>power.c</FileName>
               <FileType>1</FileType>
               <FilePath>.\applications\power.c</FilePath>
             </File>
             <File>
-              <FileName>can_dev.c</FileName>
+              <FileName>can_read.c</FileName>
               <FileType>1</FileType>
-              <FilePath>.\applications\can_dev.c</FilePath>
+              <FilePath>.\applications\can_read.c</FilePath>
             </File>
             <File>
-              <FileName>output.c</FileName>
+              <FileName>can_write.c</FileName>
               <FileType>1</FileType>
-              <FilePath>.\applications\output.c</FilePath>
+              <FilePath>.\applications\can_write.c</FilePath>
+            </File>
+            <File>
+              <FileName>rcTask.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\applications\rcTask.c</FilePath>
+            </File>
+            <File>
+              <FileName>gimbalTask.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\applications\gimbalTask.c</FilePath>
             </File>
           </Files>
         </Group>
@@ -507,6 +432,116 @@
               <FileName>motor.c</FileName>
               <FileType>1</FileType>
               <FilePath>.\Algorithm\motor.c</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>DSP_Lib</GroupName>
+          <Files>
+            <File>
+              <FileName>arm_pid_init_f32.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\Algorithm\ControllerFunctions\arm_pid_init_f32.c</FilePath>
+            </File>
+            <File>
+              <FileName>arm_pid_init_q15.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\Algorithm\ControllerFunctions\arm_pid_init_q15.c</FilePath>
+            </File>
+            <File>
+              <FileName>arm_pid_init_q31.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\Algorithm\ControllerFunctions\arm_pid_init_q31.c</FilePath>
+            </File>
+            <File>
+              <FileName>arm_pid_reset_f32.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\Algorithm\ControllerFunctions\arm_pid_reset_f32.c</FilePath>
+            </File>
+            <File>
+              <FileName>arm_pid_reset_q15.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\Algorithm\ControllerFunctions\arm_pid_reset_q15.c</FilePath>
+            </File>
+            <File>
+              <FileName>arm_pid_reset_q31.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\Algorithm\ControllerFunctions\arm_pid_reset_q31.c</FilePath>
+            </File>
+            <File>
+              <FileName>arm_sin_cos_f32.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\Algorithm\ControllerFunctions\arm_sin_cos_f32.c</FilePath>
+            </File>
+            <File>
+              <FileName>arm_sin_cos_q31.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\Algorithm\ControllerFunctions\arm_sin_cos_q31.c</FilePath>
+            </File>
+            <File>
+              <FileName>arm_cos_f32.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\Algorithm\FastMathFunctions\arm_cos_f32.c</FilePath>
+            </File>
+            <File>
+              <FileName>arm_cos_q15.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\Algorithm\FastMathFunctions\arm_cos_q15.c</FilePath>
+            </File>
+            <File>
+              <FileName>arm_cos_q31.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\Algorithm\FastMathFunctions\arm_cos_q31.c</FilePath>
+            </File>
+            <File>
+              <FileName>arm_sin_f32.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\Algorithm\FastMathFunctions\arm_sin_f32.c</FilePath>
+            </File>
+            <File>
+              <FileName>arm_sin_q15.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\Algorithm\FastMathFunctions\arm_sin_q15.c</FilePath>
+            </File>
+            <File>
+              <FileName>arm_sin_q31.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\Algorithm\FastMathFunctions\arm_sin_q31.c</FilePath>
+            </File>
+            <File>
+              <FileName>arm_sqrt_q15.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\Algorithm\FastMathFunctions\arm_sqrt_q15.c</FilePath>
+            </File>
+            <File>
+              <FileName>arm_sqrt_q31.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\Algorithm\FastMathFunctions\arm_sqrt_q31.c</FilePath>
+            </File>
+            <File>
+              <FileName>arm_common_tables.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\Algorithm\CommonTables\arm_common_tables.c</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>finsh</GroupName>
+          <Files>
+            <File>
+              <FileName>shell.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>rt-thread\components\finsh\shell.c</FilePath>
+            </File>
+            <File>
+              <FileName>cmd.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>rt-thread\components\finsh\cmd.c</FilePath>
+            </File>
+            <File>
+              <FileName>msh.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>rt-thread\components\finsh\msh.c</FilePath>
             </File>
           </Files>
         </Group>
@@ -567,36 +602,6 @@
               <FileName>drv_common.c</FileName>
               <FileType>1</FileType>
               <FilePath>libraries\HAL_Drivers\drv_common.c</FilePath>
-            </File>
-          </Files>
-        </Group>
-        <Group>
-          <GroupName>cpu</GroupName>
-          <Files>
-            <File>
-              <FileName>backtrace.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>rt-thread\libcpu\arm\common\backtrace.c</FilePath>
-            </File>
-            <File>
-              <FileName>div0.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>rt-thread\libcpu\arm\common\div0.c</FilePath>
-            </File>
-            <File>
-              <FileName>showmem.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>rt-thread\libcpu\arm\common\showmem.c</FilePath>
-            </File>
-            <File>
-              <FileName>cpuport.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>rt-thread\libcpu\arm\cortex-m4\cpuport.c</FilePath>
-            </File>
-            <File>
-              <FileName>context_rvds.S</FileName>
-              <FileType>2</FileType>
-              <FilePath>rt-thread\libcpu\arm\cortex-m4\context_rvds.S</FilePath>
             </File>
           </Files>
         </Group>
@@ -755,22 +760,77 @@
           </Files>
         </Group>
         <Group>
-          <GroupName>finsh</GroupName>
+          <GroupName>Kernel</GroupName>
           <Files>
             <File>
-              <FileName>shell.c</FileName>
+              <FileName>clock.c</FileName>
               <FileType>1</FileType>
-              <FilePath>rt-thread\components\finsh\shell.c</FilePath>
+              <FilePath>rt-thread\src\clock.c</FilePath>
             </File>
             <File>
-              <FileName>cmd.c</FileName>
+              <FileName>components.c</FileName>
               <FileType>1</FileType>
-              <FilePath>rt-thread\components\finsh\cmd.c</FilePath>
+              <FilePath>rt-thread\src\components.c</FilePath>
             </File>
             <File>
-              <FileName>msh.c</FileName>
+              <FileName>device.c</FileName>
               <FileType>1</FileType>
-              <FilePath>rt-thread\components\finsh\msh.c</FilePath>
+              <FilePath>rt-thread\src\device.c</FilePath>
+            </File>
+            <File>
+              <FileName>idle.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>rt-thread\src\idle.c</FilePath>
+            </File>
+            <File>
+              <FileName>ipc.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>rt-thread\src\ipc.c</FilePath>
+            </File>
+            <File>
+              <FileName>irq.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>rt-thread\src\irq.c</FilePath>
+            </File>
+            <File>
+              <FileName>kservice.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>rt-thread\src\kservice.c</FilePath>
+            </File>
+            <File>
+              <FileName>mem.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>rt-thread\src\mem.c</FilePath>
+            </File>
+            <File>
+              <FileName>mempool.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>rt-thread\src\mempool.c</FilePath>
+            </File>
+            <File>
+              <FileName>object.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>rt-thread\src\object.c</FilePath>
+            </File>
+            <File>
+              <FileName>scheduler.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>rt-thread\src\scheduler.c</FilePath>
+            </File>
+            <File>
+              <FileName>signal.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>rt-thread\src\signal.c</FilePath>
+            </File>
+            <File>
+              <FileName>thread.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>rt-thread\src\thread.c</FilePath>
+            </File>
+            <File>
+              <FileName>timer.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>rt-thread\src\timer.c</FilePath>
             </File>
           </Files>
         </Group>
@@ -891,6 +951,36 @@
               <FileName>stm32f4xx_hal_lptim.c</FileName>
               <FileType>1</FileType>
               <FilePath>libraries\STM32F4xx_HAL\STM32F4xx_HAL_Driver\Src\stm32f4xx_hal_lptim.c</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>cpu</GroupName>
+          <Files>
+            <File>
+              <FileName>backtrace.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>rt-thread\libcpu\arm\common\backtrace.c</FilePath>
+            </File>
+            <File>
+              <FileName>div0.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>rt-thread\libcpu\arm\common\div0.c</FilePath>
+            </File>
+            <File>
+              <FileName>showmem.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>rt-thread\libcpu\arm\common\showmem.c</FilePath>
+            </File>
+            <File>
+              <FileName>cpuport.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>rt-thread\libcpu\arm\cortex-m4\cpuport.c</FilePath>
+            </File>
+            <File>
+              <FileName>context_rvds.S</FileName>
+              <FileType>2</FileType>
+              <FilePath>rt-thread\libcpu\arm\cortex-m4\context_rvds.S</FilePath>
             </File>
           </Files>
         </Group>

@@ -2,7 +2,7 @@
 #include "rtdevice.h"
 #include "rcVariables.h"
 
-#define THREAD_PRIORITY 10
+#define THREAD_PRIORITY 5
 #define STACK_SIZE 512
 #define TIMESLICE 1
 
@@ -51,7 +51,7 @@ static void can_rx_thread(void *parameter)
     }
 }
 
-int can_sample(int argc, char *argv[])
+int can_rx(int argc, char *argv[])
 {
 		rt_err_t thread_ready;
     rt_err_t res;
@@ -96,4 +96,4 @@ int can_sample(int argc, char *argv[])
     return res;
 }
 /* 导出到 msh 命令列表中 */
-MSH_CMD_EXPORT(can_sample, can device sample);
+MSH_CMD_EXPORT(can_rx, can device sample);
