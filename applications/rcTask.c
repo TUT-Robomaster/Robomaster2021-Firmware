@@ -1,12 +1,22 @@
-#include "rcVariables.h"
+#include <rtthread.h>
+#include <rtdevice.h>
+#include "mytype.h"
 
 #define DBUS "uart1"
 #define THREAD_PRIORITY 5
 #define STACK_SIZE 256
 #define TIMESLICE 1
 
+struct rx_msg
+{
+	rt_device_t dev;
+	rt_size_t size;
+};
+static struct rt_messagequeue dbus_rx_mq; //消息队列控制块
+static uint8_t dbus_rx_buffer[18];//串口接收缓冲区
 rc_info_t rc; //遥控器通道结构体变量
 static rt_uint8_t dbus_thread_stack[STACK_SIZE];//线程栈
+void RC_Process(rc_info_t *rc,uint8_t *dbus_rx_buffer);
 static struct rt_thread dbus_receive_thread;
 rt_device_t dbus; //串口设备句柄
 
@@ -28,7 +38,6 @@ rt_err_t dbus_init(void)
 	rt_device_open(dbus, RT_DEVICE_FLAG_DMA_RX);
 	return RT_EOK;
 }
-
 
 //接收数据回调函数
 static rt_err_t dbus_input(rt_device_t dev,rt_size_t size)
@@ -68,7 +77,7 @@ static void dbus_thread_entry(void *parameter)
 rt_err_t dbus_open(void)
 {
 	rt_err_t result;
-	static char msg_pool[256];
+	static char dbus_msg_pool[256];
 	dbus_init();
 	if(!dbus)
 	{
@@ -77,9 +86,9 @@ rt_err_t dbus_open(void)
 	}
 	//初始化消息队列
 	rt_mq_init(&dbus_rx_mq, "dbus_rx_mq",
-               msg_pool,                 /* 存放消息的缓冲区 */
+               dbus_msg_pool,                 /* 存放消息的缓冲区 */
                sizeof(struct rx_msg),    /* 一条消息的最大长度 */
-               sizeof(msg_pool),         /* 存放消息的缓冲区大小 */
+               sizeof(dbus_msg_pool),         /* 存放消息的缓冲区大小 */
                RT_IPC_FLAG_FIFO);        /* 如果有多个线程等待，按照先来先得到的方法分配消息 */
 
   /* 设置接收回调函数 */

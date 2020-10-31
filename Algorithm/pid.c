@@ -20,7 +20,8 @@ void Gimbal_PID_Init(void)
 
 float pid_calc(arm_pid_instance_f32* pid,float get,float set)
 {
-	float out;
-	set = arm_pid_f32(pid,get);
+	float out,err;
+	err = get - set;
+	out = arm_pid_f32(pid,err);
 	return out;
 }
