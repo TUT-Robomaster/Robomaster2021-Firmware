@@ -3,7 +3,7 @@
 #include <board.h>
 
 extern rt_device_t can1_dev;
-void set_moto_current(rt_int16_t iq1, rt_int16_t iq2, rt_int16_t iq3, rt_int16_t iq4, rt_int8_t id)
+void set_motor_current( rt_int8_t id, rt_int16_t iq1, rt_int16_t iq2, rt_int16_t iq3, rt_int16_t iq4)
 {
 	struct	rt_can_msg current_msg={0};
 	(id == 0x00)?(current_msg.id = 0x200):(current_msg.id = 0x1FF);

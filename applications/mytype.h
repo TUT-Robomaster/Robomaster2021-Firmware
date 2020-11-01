@@ -37,8 +37,8 @@ typedef union{
 /*CAN发送或是接收的ID*/
 typedef enum
 {
-	CAN_YAW_FEEDBACK_ID   = 0x205,		//云台Yaw24v
-	CAN_PIT_FEEDBACK_ID  =  0x206,			//云台Yaw24v
+	CAN_YAW_FEEDBACK_ID   = 0x205,		//云台Yaw
+	CAN_PIT_FEEDBACK_ID  =  0x206,			//云台Pitch
 	CAN_POKE_FEEDBACK_ID  = 0x207,
 
 	CAN_MotorLF_ID 	= 0x201,    //左前
@@ -95,3 +95,4 @@ typedef struct
 	mouse_info_t mouse;
 	uint16_t key;
 } rc_info_t; //遥控器通道结构体
+

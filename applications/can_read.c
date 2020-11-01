@@ -6,13 +6,14 @@
 #define TIMESLICE 1
 
 #define CAN_DEV_NAME       "can1"      /* CAN 设备名称 */
+
 static struct rt_semaphore rx_sem;     /* 用于接收消息的信号量 */
 rt_device_t can1_dev;            /* CAN 设备句柄 */
 struct rt_thread can1_recv;
 static rt_uint8_t can1_recv_thread_stack[STACK_SIZE];//线程栈
 struct rt_can_msg rxmsg = {0};
-extern void get_moto_measure(moto_measure_t moto, rt_can_msg_t can_msg);
-
+extern void get_moto_measure(moto_measure_t *moto, struct rt_can_msg can_msg);
+struct rt_can_msg can_msg;
 extern moto_measure_t moto_pit;
 extern moto_measure_t moto_yaw;
 extern moto_measure_t moto_poke;	//拨弹电机
@@ -49,18 +50,24 @@ static void can_rx_thread(void *parameter)
         rt_sem_take(&rx_sem, RT_WAITING_FOREVER);
         /* 从 CAN 读取一帧数据 */
         rt_device_read(can1_dev, 0, &rxmsg, sizeof(rxmsg));
-				switch(rxmsg.id)
-				{
-					case CAN_YAW_FEEDBACK_ID:
-						get_moto_measure(moto_yaw, &rxmsg);
-					break;
-					case CAN_PIT_FEEDBACK_ID:
-						get_moto_measure(moto_pit, &rxmsg);
-					break;
-					case CAN_POKE_FEEDBACK_ID:
-						get_moto_measure(moto_poke, &rxmsg);
-					break;
-				}
+			switch(rxmsg.id)
+			{
+				case CAN_YAW_FEEDBACK_ID:
+					get_moto_measure(&moto_yaw, rxmsg);
+				break;
+				case CAN_PIT_FEEDBACK_ID:
+					get_moto_measure(&moto_pit, rxmsg);
+				break;
+				case CAN_POKE_FEEDBACK_ID:
+					get_moto_measure(&moto_poke, rxmsg);
+				break;
+			}
+//			if(rxmsg.id == CAN_YAW_FEEDBACK_ID)
+//				get_moto_measure(&moto_yaw, rxmsg);
+//			else if(rxmsg.id == CAN_PIT_FEEDBACK_ID)
+//				get_moto_measure(&moto_pit, rxmsg);
+//			else if(rxmsg.id == CAN_POKE_FEEDBACK_ID)
+//				get_moto_measure(&moto_poke, rxmsg);
     }
 }
 

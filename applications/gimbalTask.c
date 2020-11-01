@@ -1,5 +1,6 @@
 #include "arm_math.h"
 #include "mytype.h"
+#include "pid.h"
 #define YAW_CORRECTING_ANGLE 5461
 #define PIT_CORRECTING_ANGLE 2730
 #define YAW_OFFSET_ANGLE 0
@@ -17,7 +18,7 @@ moto_measure_t moto_yaw;
 moto_measure_t moto_poke;	//拨弹电机
 
 extern void Gimbal_PID_Init(void);
-extern float pid_calc(arm_pid_instance_f32* pid,float get,float set);
+extern float pid_calc(pid_t* pid, float get, float set);
 extern int16_t v1;
 
 
@@ -33,10 +34,6 @@ void GimbalInit(void)
 void gimbalCalc()
 {
 	GimbalInit();
-	while(1)
-	{
-
-	}
 }
 
 rt_err_t gimbalTask(void)

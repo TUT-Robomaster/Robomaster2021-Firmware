@@ -36,27 +36,27 @@ void RC_Process(rc_info_t *rc,uint8_t *dbus_rx_buffer)
 	rc->sw  = (dbus_rx_buffer[16] | dbus_rx_buffer[17] << 8) & 0x07FF;
 	rc->sw -= 1024;
 }
-void get_moto_measure(moto_measure_t moto, rt_can_msg_t can_msg)
+void get_moto_measure(moto_measure_t *moto, struct rt_can_msg can_msg)
 {
 //	u32  sum=0;
 //	u8	 i = FILTER_BUF_LEN;
 	
 	/*BUG!!! dont use this para code*/
-//	moto.angle_buf[moto.buf_idx] = (uint16_t)(can_msg->data[0]<<8 | can_msg->data[1]) ;
-//	moto.buf_idx = moto.buf_idx++ > FILTER_BUF_LEN ? 0 : moto.buf_idx;
+//	moto->angle_buf[moto->buf_idx] = (uint16_t)(can_msg->data[0]<<8 | can_msg->data[1]) ;
+//	moto->buf_idx = moto->buf_idx++ > FILTER_BUF_LEN ? 0 : moto->buf_idx;
 //	while(i){
-//		sum += moto.angle_buf[--i];
+//		sum += moto->angle_buf[--i];
 //	}
-//	moto.fited_angle = sum / FILTER_BUF_LEN;
-	moto.last_angle    =  moto.angle;
-	moto.angle         =  can_msg->data[0]<<8 | can_msg->data[1];
-	moto.real_current  =  (int16_t)(can_msg->data[2]<<8 | can_msg->data[3]);
-	moto.speed_rpm     =  moto.real_current;	//这里是因为两种电调对应位不一样的信息
-	moto.given_current =  (int16_t)(can_msg->data[4]<<8 | can_msg->data[5])/-5;
-	moto.hall          =  can_msg->data[6];
-	if(moto.angle - moto.last_angle > 4096)
-		moto.round_cnt --;
-	else if (moto.angle - moto.last_angle < -4096)
-		moto.round_cnt ++;
-	moto.total_angle = moto.round_cnt * 8192 + moto.angle - moto.offset_angle;
+//	moto->fited_angle = sum / FILTER_BUF_LEN;
+	moto->last_angle    =  moto->angle;
+	moto->angle         =  can_msg.data[0]<<8 | can_msg.data[1];
+	moto->real_current  =  (int16_t)(can_msg.data[2]<<8 | can_msg.data[3]);
+	moto->speed_rpm     =  moto->real_current;	//这里是因为两种电调对应位不一样的信息
+	moto->given_current =  (int16_t)(can_msg.data[4]<<8 | can_msg.data[5])/-5;
+	moto->hall          =  can_msg.data[6];
+	if(moto->angle - moto->last_angle > 4096)
+		moto->round_cnt --;
+	else if (moto->angle - moto->last_angle < -4096)
+		moto->round_cnt ++;
+	moto->total_angle = moto->round_cnt * 8192 + moto->angle - moto->offset_angle;
 }

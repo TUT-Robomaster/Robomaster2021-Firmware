@@ -27,9 +27,10 @@ int main(void)
 	rt_thread_mdelay(20);
 		can_rx();
 	rt_thread_mdelay(200);
-		can_write();
-	rt_thread_mdelay(20);
 	gimbalTask();
+	rt_thread_mdelay(200);
+		can_write();
+	//rt_thread_mdelay(20);
     int count = 1;
     /* set LED0 pin mode to output */
     rt_pin_mode(LED0_PIN, PIN_MODE_OUTPUT);
