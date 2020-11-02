@@ -2,7 +2,7 @@
 #include "rtdevice.h"
 #include "mytype.h"
 #include "pid.h"
-#define THREAD_PRIORITY 5
+#define THREAD_PRIORITY 15
 #define STACK_SIZE 512
 #define TIMESLICE 1
 
@@ -22,15 +22,18 @@ extern moto_measure_t moto_pit;
 extern moto_measure_t moto_yaw;
 extern moto_measure_t moto_poke;	//拨弹电机
 int16_t v1,v2,v3,v4;
+
+extern int16_t voltage_yaw;
+extern int16_t voltage_pit;
+extern int16_t current_poke;
 void can_write_entry(void *parameter)
 {
 	while(1)
 	{
-	v1 = pid_calc(&pid_yaw,moto_yaw.angle,rc.sw+3060);
-	v2 = pid_calc(&pid_pit,moto_pit.angle,rc.ch4+3060);
 	v3 = rc.ch3*30;
 	v4 = rc.ch4*30;
-	set_motor_voltage(0,v1,v2,v3,v4);
+	set_motor_voltage(0,voltage_yaw,voltage_pit,v3,v4);
+	//set_motor_current(0,0,0,0,0);
 	}
 }
 

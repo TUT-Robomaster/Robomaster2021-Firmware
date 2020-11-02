@@ -1,14 +1,8 @@
 #include "arm_math.h"
 #include "pid.h"
 #include "mytype.h"
-//arm_pid_instance_f32 pid_yaw;
-//arm_pid_instance_f32 pid_pit;
-//arm_pid_instance_f32 pid_poke;
-pid_t pid_yaw;
-pid_t pid_pit;
-extern moto_measure_t moto_pit;
-extern moto_measure_t moto_yaw;
-extern moto_measure_t moto_poke;	//拨弹电机
+
+pid_t pid_macnum;
 
 /*参数初始化--------------------------------------------------------------*/
 static void pid_param_init(
@@ -59,32 +53,6 @@ void PID_struct_init(
     pid->f_param_init(pid, mode, maxout, intergral_limit, kp, ki, kd);
 	
 }
-
-void Gimbal_PID_Init(void)
-{
-//	arm_pid_init_f32(&pid_yaw,0);
-//	arm_pid_init_f32(&pid_pit,0);
-//	arm_pid_init_f32(&pid_poke,0);
-//	pid_yaw.Kp = GIMBAL_YAW_KP;
-//	pid_yaw.Ki = GIMBAL_YAW_KI;
-//	pid_yaw.Kd = GIMBAL_YAW_KD;
-//	pid_pit.Kp = GIMBAL_PIT_KP;
-//	pid_pit.Ki = GIMBAL_PIT_KI;
-//	pid_pit.Kd = GIMBAL_PIT_KD;
-	PID_struct_init(&pid_yaw, POSITION_PID, 30000, 5000,
-									GIMBAL_YAW_KP, GIMBAL_YAW_KI, GIMBAL_YAW_KD);
-	PID_struct_init(&pid_pit, POSITION_PID, 30000, 5000,
-									GIMBAL_PIT_KP, GIMBAL_PIT_KI, GIMBAL_PIT_KD);
-}
-//float err;
-//float pid_calc(arm_pid_instance_f32* pid,float get,float set)
-//{
-//	float out;
-//	err = get - set;
-//	out = arm_pid_f32(pid,err);
-//	return out;
-//}
-
 void abs_limit(float *a, float ABS_MAX){
     if(*a > ABS_MAX)
         *a = ABS_MAX;

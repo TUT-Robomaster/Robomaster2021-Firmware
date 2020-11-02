@@ -28,7 +28,7 @@ int main(void)
 		can_rx();
 	rt_thread_mdelay(200);
 	gimbalTask();
-	rt_thread_mdelay(200);
+	rt_thread_mdelay(200); 
 		can_write();
 	//rt_thread_mdelay(20);
     int count = 1;

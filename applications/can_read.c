@@ -1,7 +1,7 @@
 #include <rtthread.h>
 #include "rtdevice.h"
 #include "mytype.h"
-#define THREAD_PRIORITY 5
+#define THREAD_PRIORITY 15
 #define STACK_SIZE 512
 #define TIMESLICE 1
 
@@ -62,12 +62,6 @@ static void can_rx_thread(void *parameter)
 					get_moto_measure(&moto_poke, rxmsg);
 				break;
 			}
-//			if(rxmsg.id == CAN_YAW_FEEDBACK_ID)
-//				get_moto_measure(&moto_yaw, rxmsg);
-//			else if(rxmsg.id == CAN_PIT_FEEDBACK_ID)
-//				get_moto_measure(&moto_pit, rxmsg);
-//			else if(rxmsg.id == CAN_POKE_FEEDBACK_ID)
-//				get_moto_measure(&moto_poke, rxmsg);
     }
 }
 

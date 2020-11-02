@@ -1,11 +1,16 @@
 #include "rtthread.h"
 #define GIMBAL_YAW_KP  100.0f
 #define GIMBAL_YAW_KI  -0.5f
-#define GIMBAL_YAW_KD  0.1f
+#define GIMBAL_YAW_KD  0.2f
 
 #define GIMBAL_PIT_KP  100.0f
 #define GIMBAL_PIT_KI  -0.5f
 #define GIMBAL_PIT_KD  0.1f
+
+#define GIMBAL_POKE_KP  50.0f
+#define GIMBAL_POKE_KI  -0.5f
+#define GIMBAL_POKE_KD  0.1f
+
 
 #define ABS(x)		((x>0)? (x): (-x)) 
 
