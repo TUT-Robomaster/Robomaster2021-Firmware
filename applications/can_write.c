@@ -21,7 +21,7 @@ extern pid_t pid_pit;
 extern moto_measure_t moto_pit;
 extern moto_measure_t moto_yaw;
 extern moto_measure_t moto_poke;	//拨弹电机
-int16_t v1,v2,v3,v4;
+extern int16_t current_macnum[4];
 
 extern int16_t voltage_yaw;
 extern int16_t voltage_pit;
@@ -30,10 +30,8 @@ void can_write_entry(void *parameter)
 {
 	while(1)
 	{
-	v3 = rc.ch3*30;
-	v4 = rc.ch4*30;
-	set_motor_voltage(0,voltage_yaw,voltage_pit,v3,v4);
-	//set_motor_current(0,0,0,0,0);
+	set_motor_voltage(0,voltage_yaw,voltage_pit,0,0);
+	set_motor_current(0,current_macnum[0],current_macnum[1],current_macnum[2],current_macnum[3]);
 	}
 }
 

@@ -2,8 +2,6 @@
 #include "pid.h"
 #include "mytype.h"
 
-pid_t pid_macnum;
-
 /*参数初始化--------------------------------------------------------------*/
 static void pid_param_init(
     pid_t *pid, 

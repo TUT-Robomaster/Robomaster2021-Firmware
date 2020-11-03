@@ -19,16 +19,18 @@ extern void power_24v_switch(rt_bool_t,rt_bool_t,rt_bool_t,rt_bool_t);
 extern rt_err_t dbus_open(void);
 extern rt_err_t can_rx(void);
 extern rt_err_t can_write(void);
-extern void gimbalTask(void);
+extern rt_err_t gimbalTask(void);
+extern rt_err_t chassisTask_init(void);
 int main(void)
 {
 		power_24v_switch(1,0,1,0);
 		dbus_open();
-	rt_thread_mdelay(20);
+	//rt_thread_mdelay(200);
 		can_rx();
-	rt_thread_mdelay(200);
+	//rt_thread_mdelay(200);
 	gimbalTask();
-	rt_thread_mdelay(200); 
+	chassisTask_init();
+	//rt_thread_mdelay(200); 
 		can_write();
 	//rt_thread_mdelay(20);
     int count = 1;

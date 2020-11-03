@@ -3,7 +3,7 @@
 #include "mytype.h"
 
 #define DBUS "uart1"
-#define THREAD_PRIORITY 5
+#define THREAD_PRIORITY 15
 #define STACK_SIZE 256
 #define TIMESLICE 1
 
@@ -91,8 +91,6 @@ rt_err_t dbus_open(void)
                sizeof(dbus_msg_pool),         /* 存放消息的缓冲区大小 */
                RT_IPC_FLAG_FIFO);        /* 如果有多个线程等待，按照先来先得到的方法分配消息 */
 
-  /* 设置接收回调函数 */
-  rt_device_set_rx_indicate(dbus, dbus_input);
 	//创建dbus接受函数
 	result  = rt_thread_init(&dbus_receive_thread,
 							 "dbus_receive",
@@ -102,10 +100,13 @@ rt_err_t dbus_open(void)
 							 STACK_SIZE,
 							 THREAD_PRIORITY,
 							 TIMESLICE);
+	/* 设置接收回调函数 */
+  rt_device_set_rx_indicate(dbus, dbus_input);
 	//创建成功则启动线程
 	if(result == RT_EOK)
 	{
 		rt_thread_startup(&dbus_receive_thread);
 	}
+
 	return result;
 }

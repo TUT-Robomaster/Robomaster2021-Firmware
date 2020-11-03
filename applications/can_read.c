@@ -17,7 +17,7 @@ struct rt_can_msg can_msg;
 extern moto_measure_t moto_pit;
 extern moto_measure_t moto_yaw;
 extern moto_measure_t moto_poke;	//拨弹电机
-
+extern moto_measure_t moto_macnum[4];
 /* 接收数据回调函数 */
 static rt_err_t can_rx_call(rt_device_t dev, rt_size_t size)
 {
@@ -52,6 +52,18 @@ static void can_rx_thread(void *parameter)
         rt_device_read(can1_dev, 0, &rxmsg, sizeof(rxmsg));
 			switch(rxmsg.id)
 			{
+				case CAN_MotorLF_ID:
+					get_moto_measure(&moto_macnum[0], rxmsg);
+				break;
+				case CAN_MotorRF_ID:
+					get_moto_measure(&moto_macnum[1], rxmsg);
+				break;
+				case CAN_MotorLB_ID:
+					get_moto_measure(&moto_macnum[2], rxmsg);
+				break;
+				case CAN_MotorRB_ID:
+					get_moto_measure(&moto_macnum[3], rxmsg);
+				break;
 				case CAN_YAW_FEEDBACK_ID:
 					get_moto_measure(&moto_yaw, rxmsg);
 				break;
