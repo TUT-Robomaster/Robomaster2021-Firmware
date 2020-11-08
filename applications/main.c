@@ -18,21 +18,13 @@
 extern void power_24v_switch(rt_bool_t,rt_bool_t,rt_bool_t,rt_bool_t);
 extern rt_err_t dbus_open(void);
 extern rt_err_t can_rx(void);
-extern rt_err_t can_write(void);
-extern rt_err_t gimbalTask(void);
-extern rt_err_t chassisTask_init(void);
+extern rt_err_t motionTask_init(void);
 int main(void)
 {
 		power_24v_switch(1,0,1,0);
 		dbus_open();
-	//rt_thread_mdelay(200);
 		can_rx();
-	//rt_thread_mdelay(200);
-	gimbalTask();
-	chassisTask_init();
-	//rt_thread_mdelay(200); 
-		can_write();
-	//rt_thread_mdelay(20);
+		motionTask_init();
     int count = 1;
     /* set LED0 pin mode to output */
     rt_pin_mode(LED0_PIN, PIN_MODE_OUTPUT);

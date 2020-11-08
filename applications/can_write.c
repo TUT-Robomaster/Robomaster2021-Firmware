@@ -9,8 +9,6 @@
 static rt_uint8_t can_write_thread_stack[STACK_SIZE];
 struct rt_thread can_write_thread;
 extern rc_info_t rc;
-extern void set_motor_voltage(uint8_t id_range, int16_t v1, int16_t v2, int16_t v3, int16_t v4);
-extern void set_motor_current(rt_int8_t id, rt_int16_t iq1, rt_int16_t iq2, rt_int16_t iq3, rt_int16_t iq4);
 //extern float pid_calc(arm_pid_instance_f32* pid,float get,float set);
 extern float pid_calc(pid_t* pid, float get, float set);
 //extern arm_pid_instance_f32 pid_yaw;
@@ -21,17 +19,12 @@ extern pid_t pid_pit;
 extern moto_measure_t moto_pit;
 extern moto_measure_t moto_yaw;
 extern moto_measure_t moto_poke;	//拨弹电机
-extern int16_t current_macnum[4];
 
-extern int16_t voltage_yaw;
-extern int16_t voltage_pit;
-extern int16_t current_poke;
 void can_write_entry(void *parameter)
 {
 	while(1)
 	{
-	set_motor_voltage(0,voltage_yaw,voltage_pit,0,0);
-	set_motor_current(0,current_macnum[0],current_macnum[1],current_macnum[2],current_macnum[3]);
+	
 	}
 }
 

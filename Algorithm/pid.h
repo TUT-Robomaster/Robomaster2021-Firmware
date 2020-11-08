@@ -11,9 +11,9 @@
 #define GIMBAL_POKE_KI  -0.5f
 #define GIMBAL_POKE_KD  0.1f
 
-#define CHASSIS_KP 10.0f
+#define CHASSIS_KP 5.0f
 #define CHASSIS_KI 0.0f
-#define CHASSIS_KD 0.01f
+#define CHASSIS_KD 0.1f
 
 #define ABS(x)		((x>0)? (x): (-x)) 
 

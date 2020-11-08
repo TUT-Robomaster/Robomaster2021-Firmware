@@ -394,29 +394,19 @@
               <FilePath>.\applications\power.c</FilePath>
             </File>
             <File>
-              <FileName>can_read.c</FileName>
+              <FileName>rc.c</FileName>
               <FileType>1</FileType>
-              <FilePath>.\applications\can_read.c</FilePath>
+              <FilePath>.\applications\rc.c</FilePath>
             </File>
             <File>
-              <FileName>can_write.c</FileName>
+              <FileName>motionTask.c</FileName>
               <FileType>1</FileType>
-              <FilePath>.\applications\can_write.c</FilePath>
+              <FilePath>.\applications\motionTask.c</FilePath>
             </File>
             <File>
-              <FileName>rcTask.c</FileName>
+              <FileName>can_rw.c</FileName>
               <FileType>1</FileType>
-              <FilePath>.\applications\rcTask.c</FilePath>
-            </File>
-            <File>
-              <FileName>gimbalTask.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>.\applications\gimbalTask.c</FilePath>
-            </File>
-            <File>
-              <FileName>chassisTask.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>.\applications\chassisTask.c</FilePath>
+              <FilePath>.\applications\can_rw.c</FilePath>
             </File>
           </Files>
         </Group>
